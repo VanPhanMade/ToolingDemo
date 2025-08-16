@@ -8,7 +8,26 @@ public class ToolsDemo : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[]
+		{
+			"Core", 
+			"CoreUObject", 
+			"Engine", 
+			"InputCore", 
+			"EnhancedInput",
+			"UMG",
+			"UMGEditor",
+			"CustomAssetEditorRuntime"
+		});
+
+		if (Target.bBuildEditor == true)
+		{
+			PublicDependencyModuleNames.AddRange(new string[]
+			{
+				"CustomAssetEditor"
+			});
+		}
+		
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

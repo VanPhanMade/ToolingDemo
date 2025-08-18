@@ -1,5 +1,6 @@
 ﻿#include "CustomAssetAction.h"
 #include "CustomAsset.h"
+#include "CustomAssetEditorApp.h"
 
 CustomAssetAction::CustomAssetAction(EAssetTypeCategories::Type category)
 {
@@ -23,7 +24,15 @@ UClass* CustomAssetAction::GetSupportedClass() const
 
 void CustomAssetAction::OpenAssetEditor(const TArray<UObject*>& inObjects, TSharedPtr<class IToolkitHost> editWithinLevelEditor)
 {
-	
+	EToolkitMode::Type mode = editWithinLevelEditor.IsValid() ? EToolkitMode::WorldCentric : EToolkitMode::Standalone;
+	for (UObject* obj : inObjects)
+	{
+		if (UCustomAsset* asset = Cast<UCustomAsset>(obj))
+		{
+			TSharedRef<CustomAssetEditorApp> editor(new CustomAssetEditorApp());
+			editor->InitEditor(mode, editWithinLevelEditor, asset);
+		}
+	}
 }
 
 uint32 CustomAssetAction::GetCategories()
